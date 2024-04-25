@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext, useState } from 'react';
+import ProductAdd from './products/AddProduct';
+import ProductList from './products/ProductList';
+import ProductsContext from './context/ProductsContext';
 
 function App() {
+  const {setSelectedProduct} = useContext(ProductsContext)
+
+  const [addProduct, setAddProduct]= useState(false)
+  const [showProductList, setShowProductList]= useState(false)
+
+  const handleClickProductList = () => {
+    setShowProductList(true);
+    setAddProduct(false)
+    setSelectedProduct(null)
+  };
+
+  const handleClickAddProduct = () => {
+    setShowProductList(false);
+    setAddProduct(true)
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <button onClick={handleClickProductList}>Tous les produits</button>
+    <button onClick={handleClickAddProduct}>Ajouter un produit</button>
+
+    {showProductList ? <ProductList /> : null}
+    {addProduct ? <ProductAdd /> : null}
+
+
+    
+    </>
   );
 }
 
